@@ -8,7 +8,7 @@ localhost:10000
 
 ## What is this all about?
 
-service worker + writable streams is a useful mechanism to load arbitrary content in response to a request
+service worker + writable streams is a useful mechanism to load generated/decrypted content in response to a request
 
 This is demonstrated on index.html whereby the request to play/seek the video is intercepted via a service worker and data retrieved in main.js.
 
