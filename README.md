@@ -1,7 +1,7 @@
 # sw + streams + iframe
 
 ## Run
-java Server.java
+> java Server.java
 
 **Navigate to:** 
 localhost:10000
