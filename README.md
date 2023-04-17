@@ -1,6 +1,6 @@
 # sw + streams + iframe
 
-## Run
+## Run (requires java >= 11)
 > java Server.java
 
 **Navigate to:** 
