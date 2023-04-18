@@ -4,7 +4,7 @@
 > java Server.java
 
 **Navigate to:** 
-localhost:10000
+localhost:8000
 
 ## What is this all about?
 
@@ -36,7 +36,7 @@ And like the video streaming example, the data is ultimately loaded from main.js
 
 ## Safari issues
 
-1. subdomain.localhost:10000 is not supported ([webkit bug](https://bugs.webkit.org/show_bug.cgi?id=160504) from 2016, workaround - deploy to a remote host)
+1. subdomain.localhost:8000 is not supported ([webkit bug](https://bugs.webkit.org/show_bug.cgi?id=160504) from 2016, workaround - deploy to a remote host)
 2. the iframe inside an iframe does not work. nothing in console to indicate what the problem is.
 
 Note: due to the minimal nature of this example - you will need to clear the cache/hard reset each time loading index.html

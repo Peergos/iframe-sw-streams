@@ -12,11 +12,14 @@ import java.util.zip.*;
 public class Server {
 
     public static void main(String[] args) throws IOException {
-        int port = 10000;
+        boolean isPublicdomain = args.length == 1;
+        int port = 8000;
         InetSocketAddress local = new InetSocketAddress("localhost", port);
         int connectionBacklog = 100;
         HttpServer localhostServer = HttpServer.create(local, connectionBacklog);
-        CspHost host = new CspHost("http://", local.getHostName(), local.getPort());
+        CspHost host = isPublicDomain ?
+            new CspHost("https://", args[0]) :
+            new CspHost("http://", local.getHostName(), local.getPort());
         List<String> frameDomains = Arrays.asList();
         List<String> appSubdomains = Arrays.asList("sandbox");
         StaticHandler handler = new FileHandler(host, Collections.emptyList(), frameDomains, appSubdomains, Paths.get("assets"), true, true);
@@ -27,7 +30,7 @@ public class Server {
 
         localhostServer.setExecutor(Executors.newFixedThreadPool(10));
         localhostServer.start();
-        System.out.println("Cacheless Server listening on http://localhost:" + port);
+        System.out.println("Cacheless Server listening on " + host);
     }
 
     public static abstract class StaticHandler implements HttpHandler
