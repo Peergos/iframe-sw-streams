@@ -12,7 +12,7 @@ import java.util.zip.*;
 public class Server {
 
     public static void main(String[] args) throws IOException {
-        boolean isPublicdomain = args.length == 1;
+        boolean isPublicDomain = args.length == 1;
         int port = 8000;
         InetSocketAddress local = new InetSocketAddress("localhost", port);
         int connectionBacklog = 100;
