@@ -22,7 +22,7 @@ public class Server {
             new CspHost("http://", local.getHostName(), local.getPort());
         List<String> frameDomains = Arrays.asList();
         List<String> appSubdomains = Arrays.asList("sandbox");
-        StaticHandler handler = new FileHandler(host, Collections.emptyList(), frameDomains, appSubdomains, Paths.get("assets"), true, true);
+        StaticHandler handler = new FileHandler(host, Collections.emptyList(), frameDomains, appSubdomains, Paths.get("assets"), true, false);
 
         List<String> allowedHosts = Arrays.asList("127.0.0.1:" + local.getPort(), host.host());
         SubdomainHandler subdomainHandler = new SubdomainHandler(allowedHosts, handler, true);
