@@ -1,5 +1,9 @@
 # sw + streams + iframe
 
+This demonstrates a bug in safari when trying to use a service worker with writable streams in a nested iframe. The example works in all other browsers. 
+
+To try it out visit [https://safaribug.peergos.com/](https://safaribug.peergos.com/) or run it on localhost.
+
 ## Run (requires java >= 11)
 > java Server.java
 
