@@ -2,7 +2,7 @@ let allFiles = {};
 let allMimeTypes = {};
 let prefix = "app";
 let resourcesToLoad = 2;
-let videoFilename = "BigBuckBunny.mp4";
+let videoFilename = "sintel_trailer-1080p.mp4";
 
 let isIframeInitialised = false;
 
