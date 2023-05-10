@@ -25,7 +25,7 @@ To take this one step further, In chrome and firefox (but not safari) it is poss
 
 The purpose is to have the inner iframe on a subdomain subdomain.domain.com to provide a secure sandbox to load arbitrary html.
 
-The java classes provide a minimal web server that sets additional response headers (ie COOP, COEP, CORP)
+The file Server.java provides a minimal web server that sets additional response headers (ie COOP, COEP, CORP) and is directly executable without compilation.
 
 
 ## Structure
