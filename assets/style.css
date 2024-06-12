@@ -1,15 +1,9 @@
-.video {
-    height: 350px;
-    width: 350px;
+.body {
+    height: 100%;
+    margin: 1;
 }
 
-.textarea {
-    width: 800px;
-    height: 150px;
-}
-#iframe-container {
-	margin:0;
-	padding:0;
-	display:flex;
-	flex-grow:1;
+.frame-style {
+    height: 500px;
+    width: 500px;
 }

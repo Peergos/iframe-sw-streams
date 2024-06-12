@@ -15,7 +15,7 @@
   const ponyfill = window.WebStreamsPolyfill || {}
   const isSecureContext = window.isSecureContext
   // TODO: Must come up with a real detection test (#69)
-  let useBlobFallback = /constructor/i.test(window.HTMLElement)
+  let useBlobFallback = /constructor/i.test(window.HTMLElement) || !!window.safari || !!window.WebKitPoint
   const downloadStrategy = isSecureContext || 'MozAppearance' in document.documentElement.style
     ? 'iframe'
     : 'navigate'
@@ -40,6 +40,7 @@
     iframe.hidden = true
     iframe.src = src
     iframe.loaded = false
+    iframe.credentialless = true
     iframe.name = 'iframe'
     iframe.isIframe = true
     iframe.postMessage = (...args) => iframe.contentWindow.postMessage(...args)

@@ -54,18 +54,6 @@ function AppData() {
     this.convertStatusCode = function(code) {
         if (code == '0') {        //              APP_FILE_MODE = 0
             return 200;
-        } else if (code == '2') { //            FILE_NOT_FOUND: 2,
-            return 404;
-        } else if (code == '3') { //            ACTION_FAILED: 3,
-            return 400;
-        } else if (code == '4') { //            DELETE_SUCCESS: 4,
-            return 204;
-        } else if (code == '5') { //            DIRECTORY_NOT_FOUND: 5,
-            return 404;
-        } else if (code == '6') { //            CREATE_SUCCESS: 6,
-            return 201;
-        } else if (code == '7') { //            UPDATE_SUCCESS: 7,
-            return 200;
         } else if (code == '8') { //            GET_SUCCESS: 8,
             return 200;
         } else {
@@ -119,37 +107,26 @@ self.addEventListener('activate', event => {
     clients.claim();
 });
 
-const maxBlockSize = 1024 * 1024 * 5;
-const oneMegBlockSize = 1024 * 1024 * 1;
-
-
-    
 self.onfetch = event => {
     const url = event.request.url;
     console.log("url=" + url);
-    
-    let respHeaders = [
-        ['Cross-Origin-Embedder-Policy', 'require-corp'],
-        ['Cross-Origin-Opener-Policy', 'same-origin'],
-        ['Cross-Origin-Resource-Policy', 'same-origin']
-    ];
-
     if (url.endsWith('/ping')) {
-    	respHeaders.push(['Access-Control-Allow-Origin', '*']);
-      	return event.respondWith(new Response('', {
-        	headers: respHeaders
-      	}))
+      return event.respondWith(new Response('pong', {
+        headers: { 'Access-Control-Allow-Origin': '*' }
+      }));
     }
     if (appPort == null) {
         return;
     }
-    
-    
     if (url == downloadUrl) {
-        respHeaders.push(['Content-type', 'text/html']);
-      	return event.respondWith(new Response('', {
-        	headers: respHeaders
-      	}))
+      return event.respondWith(new Response('', {
+            headers: [
+                //['Access-Control-Allow-Origin', '*'],
+                ['Cross-Origin-Embedder-Policy', 'credentialless'],
+                ['Cross-Origin-Opener-Policy', 'same-origin'],
+                ['Cross-Origin-Resource-Policy', 'same-origin']
+            ]
+      }))
     }
     const requestedResource = new URL(url)
     let prefix = '/apps/sandbox/';
@@ -163,10 +140,7 @@ self.onfetch = event => {
         var restFilePath = filePath;
         return event.respondWith(
             (async function() {
-                var formData = null;
-                var buffer = null;
-                appPort.postMessage({ filePath: restFilePath, requestId: '', apiMethod: method, bytes: buffer,
-                    hasFormData: formData != null});
+                appPort.postMessage({ filePath: restFilePath, requestId: '', apiMethod: method, bytes: null, hasFormData: false});
                 return returnAppData(restFilePath);
             })()
         )
@@ -184,29 +158,16 @@ function returnAppData(filePath) {
             }
         }
         pump()
-    }).then(function(fileData, err) {    
-        if (fileData.statusCode == 201) {
-            let location = new TextDecoder().decode(fileData.file);
-            return new Response(null, {
-                status: fileData.statusCode,
-                headers: [
-                    ['location', location],
-                    ['Cross-Origin-Embedder-Policy', 'require-corp'],
-                    ['Cross-Origin-Opener-Policy', 'same-origin'],
-                    ['Cross-Origin-Resource-Policy', 'same-origin']
-                ]
-            });
-        } else {
-            return new Response(fileData.file.byteLength == 0 ? null : fileData.file, {
-                status: fileData.statusCode,
-                headers: [
-              		['Content-Type', fileData.mimeType],
-                	['Content-Length', fileData.file.byteLength],
-                	['Cross-Origin-Embedder-Policy', 'require-corp'],
-                	['Cross-Origin-Opener-Policy', 'same-origin'],
-                	['Cross-Origin-Resource-Policy', 'same-origin']
-                ]
-            });
-        }
+    }).then(function(fileData, err) {
+        return new Response(fileData.file.byteLength == 0 ? null : fileData.file, {
+            status: fileData.statusCode,
+            headers: [
+                ['Content-Type', fileData.mimeType],
+                ['Content-Length', fileData.file.byteLength],
+                ['Cross-Origin-Embedder-Policy', 'credentialless'],
+                ['Cross-Origin-Opener-Policy', 'same-origin'],
+                ['Cross-Origin-Resource-Policy', 'same-origin']
+            ]
+        });
     });
 }

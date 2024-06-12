@@ -13,7 +13,7 @@ public class Server {
 
     public static void main(String[] args) throws IOException {
         boolean isPublicDomain = args.length == 1;
-        int port = 8000;
+        int port = 10000;
         InetSocketAddress local = new InetSocketAddress("localhost", port);
         int connectionBacklog = 100;
         HttpServer localhostServer = HttpServer.create(local, connectionBacklog);

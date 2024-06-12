@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en">
+        <body>
+            <h2>Hello World!</h2>
+	        <label id="inside-isolatedIFrame"></label>
+	        <img src="logo.png">
+        </body>
+    <script>
+        window.onload = function() {
+            document.getElementById("inside-isolatedIFrame").innerText = "Inside - Cross Origin Isolated: " + crossOriginIsolated;
+        }
+    </script>
+</html>

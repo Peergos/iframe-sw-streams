@@ -3,28 +3,14 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Iframe + Service Worker + WritableStreams</title>
-        <script src="StreamSaver.js"></script>
+        <title>Service Worker + WritableStreams</title>
         <script type="text/javascript" src="main.js"></script>
         <link rel="stylesheet" type="text/css" href="style.css">
     </head>
     <body>
-	<div>Stream video via service worker and writable streams</div>
-	<div>
-	    <video id="videoElement" class="video" controls></video>
-	</div>
-    <div><button id="reloadIframe">Please Wait...</button></div>
-    <div>
-		<textarea id="pageContent" class="textarea" readonly>
-            <html>
-                <body>
-                    <h2>Some text</h2>
-	            	<img src="logo.png">
-                </body>
-            </html>
-		</textarea>
-	</div>
-    <div id='iframe-container'>
-    </div>
+        <span><label id="isolated-outside"></label></span>
+        <div>
+            <iframe id="sandboxId"  class="frame-style"></iframe>
+        </div>
     </body>
 </html>
