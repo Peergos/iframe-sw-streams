@@ -40,7 +40,6 @@
     iframe.hidden = true
     iframe.src = src
     iframe.loaded = false
-    iframe.credentialless = true
     iframe.name = 'iframe'
     iframe.isIframe = true
     iframe.postMessage = (...args) => iframe.contentWindow.postMessage(...args)
