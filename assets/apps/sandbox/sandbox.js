@@ -51,7 +51,7 @@ function actionRequest(filePath, requestId, apiMethod, bytes, hasFormData) {
 }
 function load(appName, indexHTML) {
     let that = this;
-    removeServiceWorkerRegistration(() => {
+    //removeServiceWorkerRegistration(() => {
         let fileStream = streamSaver.createWriteStream(appName, "text/html", url => {
                 let iframe = document.getElementById("appId");
                 iframe.src= indexHTML;
@@ -63,7 +63,7 @@ function load(appName, indexHTML) {
             }
         );
         that.streamWriter = fileStream.getWriter();
-    });
+    //});
 }
 function respondToLoadedChunk(bytes) {
     streamWriter.write(bytes);
