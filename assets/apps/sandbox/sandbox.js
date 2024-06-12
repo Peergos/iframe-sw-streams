@@ -23,35 +23,12 @@ let handler = function (e) {
 };
 window.addEventListener('message', handler);
 
-function removeServiceWorkerRegistration(callback) {
-    if (navigator.serviceWorker == null) {
-        console.log("navigator.serviceWorker == null");
-        mainWindow.postMessage({action:'failedInit'}, origin);
-    } else {
-        navigator.serviceWorker.getRegistrations().then(
-            function(registrations) {
-                for(let registration of registrations) {
-                    try {
-                    registration.unregister();
-                    } catch(ex) {
-                        console.log(ex);
-                    }
-                }
-                callback();
-            }
-        ).catch(err => {
-            console.log("Failed initialisation:" + err);
-            mainWindow.postMessage({action:'failedInit'}, origin);
-        });
-    }
-}
 function actionRequest(filePath, requestId, apiMethod, bytes, hasFormData) {
     mainWindow.postMessage({action:'actionRequest', requestId: requestId, filePath: filePath, apiMethod: apiMethod,
     bytes: bytes, hasFormData: hasFormData}, origin);
 }
 function load(appName, indexHTML) {
     let that = this;
-    removeServiceWorkerRegistration(() => {
         let fileStream = streamSaver.createWriteStream(appName, "text/html", url => {
                 let iframe = document.getElementById("appId");
                 iframe.src= indexHTML;
@@ -63,7 +40,6 @@ function load(appName, indexHTML) {
             }
         );
         that.streamWriter = fileStream.getWriter();
-    });
 }
 function respondToLoadedChunk(bytes) {
     streamWriter.write(bytes);
