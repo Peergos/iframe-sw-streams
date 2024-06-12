@@ -1,27 +1,17 @@
-# sw + streams + iframe
+# service worker + streams + iframe + credentialless
 
-This demonstrates a bug in safari when trying to use a service worker with writable streams in a nested iframe. The example works in all other browsers. 
+This demonstrates a difference in behaviour between chrome and firefox/safari 
 
-To try it out visit [https://safaribug.peergos.com/](https://safaribug.peergos.com/) or run it on localhost.
+To try it out visit [https://credentialless.peergos.com/](https://credentialless.peergos.com/) or run it on localhost.
 
 ## Run (requires java >= 11)
 > java Server.java
 
 **Navigate to:** 
-localhost:8000
-
-## What is this all about?
-
-service worker + writable streams is a useful mechanism to load generated/decrypted content in response to a request
-
-This is demonstrated on index.html whereby the request to play/seek the video is intercepted via a service worker and data retrieved in main.js.
-
-A writable stream is setup between main.js and sw.js and pipes the data back to the service worker. 
+localhost:10000
 
 
 ## Sandboxed iframe
-
-To take this one step further, In chrome and firefox (but not safari) it is possible to load content into an iframe inside an iframe via a similar mechanism.
 
 The purpose is to have the inner iframe on a subdomain subdomain.domain.com to provide a secure sandbox to load arbitrary html.
 
@@ -36,22 +26,31 @@ The .src is set to /apps/sandbox/sandbox.html which contains the inner iframe.
 
 The associated file sandbox.js loads a service worker to intercept requests.
 
-And like the video streaming example, the data is ultimately loaded from main.js.
 
-## Safari issues
+## Chrome issue
 
-1. subdomain.localhost:8000 is not supported ([webkit bug](https://bugs.webkit.org/show_bug.cgi?id=160504) from 2016, workaround - deploy to a remote host)
-2. the iframe inside an iframe does not work. nothing in console to indicate what the problem is.
+If I check crossOriginIsolated inside the sandboxed iframe it is set to FALSE
+In Safari and firefox it is set to TRUE.
 
-Note: due to the minimal nature of this example - you will need to clear the cache/hard reset each time loading index.html
+The fact that it is FALSE means I cannot host multi-threaded WASM code in the sandbox as SharedArrayBuffer is only available if crossOriginIsolated=TRUE
 
-
-Alternative method (doesn't require the hard reset - but is the full app and therefore much more code):
+Alternative method to demonstrate issue
 
 1. Create an account on peergos-demo.net
-2. upload a minimal .html file
+2. upload a minimal .html file with code:
+'''
+<!DOCTYPE html>
+<html lang="en">
+        <body>
+            <h2>Hello World!</h2>
+	        <label id="inside-isolatedIFrame"></label>
+        </body>
+    <script>
+        window.onload = function() {
+            document.getElementById("inside-isolatedIFrame").innerText = "Inside - Cross Origin Isolated: " + crossOriginIsolated;
+        }
+    </script>
+</html>
+'''
 3. view the html file in the in-built html viewer (view action available from right-click menu)
 
-The file will be viewable in chrome and firefox, but not safari.
-
-Please make sure that you are not in incognito mode.
