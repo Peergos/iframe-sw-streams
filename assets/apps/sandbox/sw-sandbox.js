@@ -124,7 +124,8 @@ self.onfetch = event => {
                 //['Access-Control-Allow-Origin', '*'],
                 ['Cross-Origin-Embedder-Policy', 'credentialless'],
                 ['Cross-Origin-Opener-Policy', 'same-origin'],
-                ['Cross-Origin-Resource-Policy', 'same-origin']
+                ['Cross-Origin-Resource-Policy', 'same-origin'],
+                ['Access-Control-Allow-Origin', '*'],
             ]
       }))
     }
@@ -166,7 +167,8 @@ function returnAppData(filePath) {
                 ['Content-Length', fileData.file.byteLength],
                 ['Cross-Origin-Embedder-Policy', 'credentialless'],
                 ['Cross-Origin-Opener-Policy', 'same-origin'],
-                ['Cross-Origin-Resource-Policy', 'same-origin']
+                ['Cross-Origin-Resource-Policy', 'same-origin'],
+                ['Access-Control-Allow-Origin', '*'],
             ]
         });
     });
