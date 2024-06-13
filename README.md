@@ -38,7 +38,9 @@ Alternative method to demonstrate issue
 
 1. Create an account on peergos-demo.net
 2. upload a minimal .html file with code:
-'''
+
+```
+
 <!DOCTYPE html>
 <html lang="en">
         <body>
@@ -51,6 +53,8 @@ Alternative method to demonstrate issue
         }
     </script>
 </html>
-'''
+
+```
+
 3. view the html file in the in-built html viewer (view action available from right-click menu)
 
