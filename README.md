@@ -29,8 +29,7 @@ The associated file sandbox.js loads a service worker to intercept requests.
 
 ## Chrome issue
 
-If I check crossOriginIsolated inside the sandboxed iframe it is set to FALSE
-In Safari and firefox it is set to TRUE.
+If I check crossOriginIsolated inside the sandboxed iframe it is set to FALSE. In Safari and firefox it is set to TRUE.
 
 The fact that it is FALSE means I cannot host multi-threaded WASM code in the sandbox as SharedArrayBuffer is only available if crossOriginIsolated=TRUE
 
